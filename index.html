@@ -13,7 +13,7 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; margin: 0; padding: 0; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #0f172a; margin: 0; padding: 0; overflow: hidden; }
         
         /* Attractive Animated Gradient Background */
         .app-background {
@@ -92,13 +92,14 @@
         .animate-fade-in { animation: fadeIn 0.5s ease-out forwards; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Responsive Container instead of fixed square */
+        /* Remove fixed container borders, let it fill viewport completely */
         .app-container {
+            width: 100vw;
+            height: 100vh;
             overflow-y: auto;
             overflow-x: hidden;
             scrollbar-width: thin;
             scrollbar-color: #94a3b8 transparent;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         .app-container::-webkit-scrollbar { width: 8px; }
         .app-container::-webkit-scrollbar-thumb { background-color: #94a3b8; border-radius: 4px; }
@@ -127,7 +128,7 @@
         };
 
         const BacteriaIcon = ({ className, style }) => (
-            <svg viewBox="0 0 100 100" className={className} style={style} width="40" height="40" fill="rgba(16, 185, 129, 0.8)">
+            <svg viewBox="0 0 100 100" className={className} style={style} width="30" height="30" fill="rgba(16, 185, 129, 0.8)">
                 <path d="M30 50 C 30 30, 70 30, 70 50 C 70 70, 30 70, 30 50 Z" />
                 <circle cx="45" cy="45" r="5" fill="#fff" opacity="0.5"/>
                 <circle cx="60" cy="55" r="4" fill="#fff" opacity="0.5"/>
@@ -171,35 +172,35 @@
             };
 
             return (
-                <div className="space-y-4 h-full flex flex-col justify-center">
+                <div className="h-full flex flex-col justify-center">
                     {step === 'predict' && (
-                        <div className="animate-fade-in space-y-4 max-w-4xl mx-auto w-full">
-                            <h3 className="text-2xl sm:text-4xl font-extrabold text-indigo-900 drop-shadow-sm text-center">What is happening here?</h3>
-                            <p className="text-lg sm:text-2xl text-indigo-800 font-medium text-center">How does a pressure cooker help food cook faster?</p>
-                            <div className="grid grid-cols-1 md:grid-cols-1 gap-3 mt-6">
-                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-blue-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">A. It makes the food colder.</button>
-                                <button onClick={() => handlePrediction(true)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-blue-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">B. Increased pressure raises the boiling temperature of water.</button>
-                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-blue-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">C. It removes water from the food.</button>
+                        <div className="animate-fade-in flex flex-col items-center justify-center h-full max-w-4xl mx-auto w-full px-4">
+                            <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-indigo-900 drop-shadow-sm text-center mb-2">What is happening here?</h3>
+                            <p className="text-lg md:text-xl lg:text-2xl text-indigo-800 font-medium text-center mb-6 lg:mb-8">How does a pressure cooker help food cook faster?</p>
+                            <div className="w-full flex flex-col gap-3 lg:gap-4">
+                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-blue-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">A. It makes the food colder.</button>
+                                <button onClick={() => handlePrediction(true)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-blue-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">B. Increased pressure raises the boiling temperature of water.</button>
+                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-blue-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">C. It removes water from the food.</button>
                             </div>
                         </div>
                     )}
                     {step === 'explain' && (
-                        <div className="animate-fade-in text-center space-y-4 flex flex-col items-center max-w-4xl mx-auto">
-                            <div className="w-32 h-32 sm:w-48 sm:h-48 rounded-full overflow-hidden shadow-2xl mb-2 border-4 border-white bg-white shrink-0">
+                        <div className="animate-fade-in flex flex-col items-center justify-center h-full max-w-4xl mx-auto px-4">
+                            <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden shadow-2xl mb-4 border-4 border-white bg-white shrink-0">
                                 <img src="assets/pressure_cooker.jpg" alt="Cooker" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-3xl sm:text-4xl font-extrabold text-blue-600 drop-shadow-sm">The correct answer is B!</h3>
-                            <p className="text-lg sm:text-xl text-gray-800 font-medium max-w-2xl leading-relaxed bg-white/60 p-4 sm:p-6 rounded-2xl backdrop-blur-sm">When you trap steam inside, the pressure goes up. High pressure makes water boil at a higher temperature (like 120°C instead of 100°C), cooking food much faster!</p>
-                            <button onClick={() => setStep('experiment')} className="px-6 py-3 sm:px-10 sm:py-4 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 shadow-xl text-lg sm:text-xl transition transform hover:scale-105 mt-4">Try it out!</button>
+                            <h3 className="text-2xl lg:text-3xl font-extrabold text-blue-600 drop-shadow-sm mb-4">The correct answer is B!</h3>
+                            <p className="text-base lg:text-lg text-gray-800 font-medium max-w-2xl text-center leading-relaxed bg-white/60 p-4 lg:p-6 rounded-2xl backdrop-blur-sm mb-6 lg:mb-8">When you trap steam inside, the pressure goes up. High pressure makes water boil at a higher temperature (like 120°C instead of 100°C), cooking food much faster!</p>
+                            <button onClick={() => setStep('experiment')} className="px-8 py-3 lg:px-10 lg:py-4 bg-blue-600 text-white font-bold rounded-2xl hover:bg-blue-700 shadow-xl text-lg transition transform hover:scale-105">Try it out!</button>
                         </div>
                     )}
                     {step === 'experiment' && (
-                        <div className="animate-fade-in space-y-4 sm:space-y-6 flex flex-col h-full items-center justify-center w-full max-w-5xl mx-auto">
-                            <h3 className="text-2xl sm:text-3xl font-extrabold text-indigo-900 drop-shadow-sm text-center">Experiment: Boil Water</h3>
+                        <div className="animate-fade-in flex flex-col h-full items-center justify-center w-full max-w-5xl mx-auto px-4">
+                            <h3 className="text-2xl lg:text-3xl font-extrabold text-indigo-900 drop-shadow-sm text-center mb-4 lg:mb-6">Experiment: Boil Water</h3>
                             
-                            <div className="w-full flex flex-col md:flex-row gap-4 sm:gap-8 items-center justify-center p-4 sm:p-8 bg-white/70 backdrop-blur-md rounded-3xl border border-white shadow-lg flex-1 min-h-0">
+                            <div className="w-full flex flex-col md:flex-row gap-6 lg:gap-10 items-center justify-center p-6 lg:p-8 bg-white/70 backdrop-blur-md rounded-3xl border border-white shadow-lg">
                                 <div className="w-full md:w-1/2 flex flex-col items-center">
-                                    <div className="relative w-32 h-32 sm:w-48 sm:h-48 mb-4">
+                                    <div className="relative w-32 h-32 lg:w-40 lg:h-40 mb-4">
                                         <div className={`w-full h-full rounded-full shadow-xl border-4 border-white overflow-hidden bg-white ${isBoiling ? 'shake-real' : ''}`}>
                                             <img src="assets/pressure_cooker.jpg" alt="Cooker" className="w-full h-full object-cover" />
                                         </div>
@@ -215,35 +216,35 @@
                                             <div className="steam w-10 h-10 -top-6 left-1/2 -ml-5" style={{animationDelay: '0s', animationDuration: '0.5s', opacity: 1}}></div>
                                         )}
                                     </div>
-                                    <div className="text-4xl sm:text-5xl font-black text-indigo-900">{temp}°C</div>
-                                    <div className="text-sm sm:text-lg text-indigo-700 font-bold mt-1 bg-indigo-100 px-3 py-1 rounded-full">Boiling Point: {boilingPoint}°C</div>
+                                    <div className="text-4xl lg:text-5xl font-black text-indigo-900">{temp}°C</div>
+                                    <div className="text-sm lg:text-base text-indigo-700 font-bold mt-2 bg-indigo-100 px-3 py-1 rounded-full">Boiling Point: {boilingPoint}°C</div>
                                 </div>
-                                <div className="w-full md:w-1/2 space-y-4 sm:space-y-8">
-                                    <div className="bg-white/90 p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100">
-                                        <label className="font-bold block mb-2 sm:mb-4 text-gray-700 uppercase tracking-wide text-sm sm:text-base">Heat Level</label>
+                                <div className="w-full md:w-1/2 flex flex-col gap-4 lg:gap-6">
+                                    <div className="bg-white/90 p-4 lg:p-5 rounded-2xl shadow-sm border border-gray-100">
+                                        <label className="font-bold block mb-2 text-gray-700 uppercase tracking-wide text-xs lg:text-sm">Heat Level</label>
                                         <input type="range" min="20" max="130" value={temp} onChange={(e) => setTemp(Number(e.target.value))} className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-red-500 shadow-inner" />
                                     </div>
-                                    <div className="bg-white/90 p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100">
-                                        <label className="font-bold block mb-2 sm:mb-4 text-gray-700 uppercase tracking-wide text-sm sm:text-base">Cooker Lid</label>
-                                        <button onClick={() => setLidClosed(!lidClosed)} className={`w-full py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-lg transition shadow-md ${lidClosed ? 'bg-indigo-900 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>
+                                    <div className="bg-white/90 p-4 lg:p-5 rounded-2xl shadow-sm border border-gray-100">
+                                        <label className="font-bold block mb-2 text-gray-700 uppercase tracking-wide text-xs lg:text-sm">Cooker Lid</label>
+                                        <button onClick={() => setLidClosed(!lidClosed)} className={`w-full py-3 lg:py-4 rounded-xl font-bold text-sm lg:text-base transition shadow-md ${lidClosed ? 'bg-indigo-900 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>
                                             {lidClosed ? 'Lid Closed (High Pressure)' : 'Lid Open (Normal Pressure)'}
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             
-                            <div className="h-auto min-h-[4rem] sm:min-h-[5rem] flex items-center justify-center text-center w-full px-4">
+                            <div className="h-16 lg:h-20 flex items-center justify-center text-center w-full mt-4 lg:mt-6">
                                 {foodCooked ? 
-                                    <div className="text-lg sm:text-2xl font-bold text-green-700 animate-fade-in bg-green-100 px-4 py-2 sm:px-6 sm:py-3 rounded-full border border-green-300 shadow-md">🎉 Success! Food is cooking super fast at {temp}°C!</div> :
-                                    (isBoiling ? <div className="text-sm sm:text-xl font-bold text-blue-700 bg-blue-100 px-4 py-2 rounded-full border border-blue-300 shadow-sm">Water is boiling vigorously!</div> :
-                                    (buildingPressure ? <div className="text-sm sm:text-xl font-bold text-orange-700 bg-orange-100 px-4 py-2 rounded-full border border-orange-300 shadow-sm">Building pressure... (will boil at 120°C)</div> :
-                                    <div className="text-sm sm:text-xl text-gray-600 font-semibold bg-white/60 px-4 py-2 rounded-full">Increase the heat to reach the boiling point.</div>))
+                                    <div className="text-base lg:text-xl font-bold text-green-700 animate-fade-in bg-green-100 px-6 py-2 rounded-full border border-green-300 shadow-md">🎉 Success! Food is cooking super fast at {temp}°C!</div> :
+                                    (isBoiling ? <div className="text-sm lg:text-lg font-bold text-blue-700 bg-blue-100 px-6 py-2 rounded-full border border-blue-300 shadow-sm">Water is boiling vigorously!</div> :
+                                    (buildingPressure ? <div className="text-sm lg:text-lg font-bold text-orange-700 bg-orange-100 px-6 py-2 rounded-full border border-orange-300 shadow-sm">Building pressure... (will boil at 120°C)</div> :
+                                    <div className="text-sm lg:text-lg text-gray-600 font-semibold bg-white/60 px-6 py-2 rounded-full">Increase the heat to reach the boiling point.</div>))
                                 }
                             </div>
 
                             {foodCooked && (
-                                <div className="text-center mt-2 pb-4">
-                                    <button onClick={onComplete} className="px-8 py-3 sm:px-10 sm:py-4 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 shadow-xl text-lg sm:text-xl transition transform hover:scale-105">Complete Activity</button>
+                                <div className="text-center mt-2">
+                                    <button onClick={onComplete} className="px-8 py-3 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 shadow-xl text-base transition transform hover:scale-105">Complete Activity</button>
                                 </div>
                             )}
                         </div>
@@ -295,82 +296,82 @@
             };
 
             return (
-                <div className="space-y-4 h-full flex flex-col justify-center">
+                <div className="h-full flex flex-col justify-center">
                     {step === 'predict' && (
-                        <div className="animate-fade-in space-y-4 max-w-4xl mx-auto w-full">
-                            <h3 className="text-2xl sm:text-4xl font-extrabold text-indigo-900 drop-shadow-sm text-center">What is happening here?</h3>
-                            <p className="text-lg sm:text-2xl text-indigo-800 font-medium text-center">How does milk change into thick, sour curd?</p>
-                            <div className="grid grid-cols-1 gap-3 mt-6">
-                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-purple-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">A. The milk is slowly freezing.</button>
-                                <button onClick={() => handlePrediction(true)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-purple-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">B. Helpful microorganisms are changing the milk.</button>
-                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-purple-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">C. The water in the milk is evaporating.</button>
+                        <div className="animate-fade-in flex flex-col items-center justify-center h-full max-w-4xl mx-auto w-full px-4">
+                            <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-indigo-900 drop-shadow-sm text-center mb-2">What is happening here?</h3>
+                            <p className="text-lg md:text-xl lg:text-2xl text-indigo-800 font-medium text-center mb-6 lg:mb-8">How does milk change into thick, sour curd?</p>
+                            <div className="w-full flex flex-col gap-3 lg:gap-4">
+                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-purple-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">A. The milk is slowly freezing.</button>
+                                <button onClick={() => handlePrediction(true)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-purple-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">B. Helpful microorganisms are changing the milk.</button>
+                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-purple-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">C. The water in the milk is evaporating.</button>
                             </div>
                         </div>
                     )}
                     {step === 'explain' && (
-                        <div className="animate-fade-in text-center space-y-4 flex flex-col items-center max-w-4xl mx-auto">
-                            <div className="relative w-32 h-32 sm:w-48 sm:h-48 rounded-full overflow-hidden shadow-2xl mb-2 border-4 border-white bg-white shrink-0">
+                        <div className="animate-fade-in flex flex-col items-center justify-center h-full max-w-4xl mx-auto px-4">
+                            <div className="relative w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden shadow-2xl mb-4 border-4 border-white bg-white shrink-0">
                                 <img src="assets/bowl_of_curd.jpg" alt="Curd" className="w-full h-full object-cover" />
                                 <div className="absolute inset-0 bg-purple-900/20 flex items-center justify-center">
                                     <BacteriaIcon className="bacteria-svg absolute top-6 left-6" />
                                     <BacteriaIcon className="bacteria-svg absolute bottom-6 right-6" />
                                 </div>
                             </div>
-                            <h3 className="text-3xl sm:text-4xl font-extrabold text-purple-600 drop-shadow-sm">The correct answer is B!</h3>
-                            <p className="text-lg sm:text-xl text-gray-800 font-medium max-w-2xl leading-relaxed bg-white/60 p-4 sm:p-6 rounded-2xl backdrop-blur-sm">Microorganisms called <b>Lactobacillus</b> live in curd. When you add a little curd (starter) to warm milk, these bacteria multiply and make it thick!</p>
-                            <button onClick={() => setStep('experiment')} className="px-6 py-3 sm:px-10 sm:py-4 bg-purple-600 text-white font-bold rounded-2xl hover:bg-purple-700 shadow-xl text-lg sm:text-xl transition transform hover:scale-105 mt-4">Make Curd!</button>
+                            <h3 className="text-2xl lg:text-3xl font-extrabold text-purple-600 drop-shadow-sm mb-4">The correct answer is B!</h3>
+                            <p className="text-base lg:text-lg text-gray-800 font-medium max-w-2xl text-center leading-relaxed bg-white/60 p-4 lg:p-6 rounded-2xl backdrop-blur-sm mb-6 lg:mb-8">Microorganisms called <b>Lactobacillus</b> live in curd. When you add a little curd (starter) to warm milk, these bacteria multiply and make it thick!</p>
+                            <button onClick={() => setStep('experiment')} className="px-8 py-3 lg:px-10 lg:py-4 bg-purple-600 text-white font-bold rounded-2xl hover:bg-purple-700 shadow-xl text-lg transition transform hover:scale-105">Make Curd!</button>
                         </div>
                     )}
                     {step === 'experiment' && (
-                        <div className="animate-fade-in space-y-4 sm:space-y-6 flex flex-col h-full items-center justify-center w-full max-w-5xl mx-auto">
-                            <h3 className="text-2xl sm:text-3xl font-extrabold text-indigo-900 drop-shadow-sm text-center">Experiment: Curd Making</h3>
+                        <div className="animate-fade-in flex flex-col h-full items-center justify-center w-full max-w-5xl mx-auto px-4">
+                            <h3 className="text-2xl lg:text-3xl font-extrabold text-indigo-900 drop-shadow-sm text-center mb-4 lg:mb-6">Experiment: Curd Making</h3>
                             
-                            <div className="w-full flex flex-col md:flex-row gap-4 sm:gap-8 items-center p-4 sm:p-8 bg-white/70 backdrop-blur-md rounded-3xl border border-white shadow-lg flex-1 min-h-0">
-                                <div className="w-full md:w-1/2 space-y-4 sm:space-y-8">
-                                    <div className="bg-white/90 p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100">
-                                        <label className="font-bold block mb-2 sm:mb-4 text-gray-700 uppercase tracking-wide text-sm sm:text-base">Milk Temperature</label>
-                                        <div className="flex flex-row md:flex-col gap-2 sm:gap-3 flex-wrap">
+                            <div className="w-full flex flex-col md:flex-row gap-6 lg:gap-10 items-center justify-center p-6 lg:p-8 bg-white/70 backdrop-blur-md rounded-3xl border border-white shadow-lg">
+                                <div className="w-full md:w-1/2 flex flex-col gap-4 lg:gap-6">
+                                    <div className="bg-white/90 p-4 lg:p-5 rounded-2xl shadow-sm border border-gray-100">
+                                        <label className="font-bold block mb-2 text-gray-700 uppercase tracking-wide text-xs lg:text-sm">Milk Temperature</label>
+                                        <div className="flex flex-row md:flex-col gap-2">
                                             {['cold', 'warm', 'hot'].map(t => (
-                                                <button key={t} onClick={() => { setMilkTemp(t); setResult(null); }} className={`flex-1 md:flex-none py-2 sm:py-3 px-4 rounded-xl font-bold capitalize transition shadow-md text-sm sm:text-base ${milkTemp === t ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>{t}</button>
+                                                <button key={t} onClick={() => { setMilkTemp(t); setResult(null); }} className={`flex-1 md:flex-none py-2 lg:py-3 px-4 rounded-xl font-bold capitalize transition shadow-md text-sm lg:text-base ${milkTemp === t ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>{t}</button>
                                             ))}
                                         </div>
                                     </div>
-                                    <div className="bg-white/90 p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100">
-                                        <button onClick={() => { setHasStarter(!hasStarter); setResult(null); }} className={`w-full py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-lg transition shadow-md ${hasStarter ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>
+                                    <div className="bg-white/90 p-4 lg:p-5 rounded-2xl shadow-sm border border-gray-100">
+                                        <button onClick={() => { setHasStarter(!hasStarter); setResult(null); }} className={`w-full py-3 lg:py-4 rounded-xl font-bold text-sm lg:text-base transition shadow-md ${hasStarter ? 'bg-green-600 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'}`}>
                                             {hasStarter ? 'Starter Added ✓' : '+ Add Starter (1 spoon)'}
                                         </button>
                                     </div>
-                                    <button onClick={runSimulation} className="w-full py-3 sm:py-4 bg-indigo-600 text-white font-bold rounded-xl text-lg sm:text-xl hover:bg-indigo-700 shadow-xl transition transform hover:scale-105">Wait 8 Hours ⏳</button>
+                                    <button onClick={runSimulation} className="w-full py-3 lg:py-4 bg-indigo-600 text-white font-bold rounded-xl text-base lg:text-lg hover:bg-indigo-700 shadow-xl transition transform hover:scale-105">Wait 8 Hours ⏳</button>
                                 </div>
 
                                 <div className="w-full md:w-1/2 flex flex-col items-center text-center">
-                                    <div className="relative w-32 h-32 sm:w-56 sm:h-56 rounded-full overflow-hidden shadow-xl mb-4 sm:mb-8 border-4 border-white bg-white shrink-0">
+                                    <div className="relative w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden shadow-xl mb-4 border-4 border-white bg-white shrink-0">
                                         <img src="assets/bowl_of_curd.jpg" alt="Result" className={`w-full h-full object-cover transition-all duration-1000 ${result === 'curd' ? 'opacity-100 scale-100' : 'opacity-30 scale-110 blur-sm'}`} />
                                         
                                         {result === 'curd' && (
                                             <div className="absolute inset-0">
-                                                <BacteriaIcon className="bacteria-svg absolute top-8 left-8 sm:top-12 sm:left-12 opacity-80" />
-                                                <BacteriaIcon className="bacteria-svg absolute bottom-10 right-10 sm:bottom-16 sm:right-16 opacity-80" />
+                                                <BacteriaIcon className="bacteria-svg absolute top-8 left-8 opacity-80" />
+                                                <BacteriaIcon className="bacteria-svg absolute bottom-10 right-10 opacity-80" />
                                                 <BacteriaIcon className="bacteria-svg absolute top-1/2 left-1/2 opacity-80" />
                                             </div>
                                         )}
                                         {result !== 'curd' && (
-                                            <div className="absolute inset-0 flex items-center justify-center font-bold text-gray-500 text-lg sm:text-2xl bg-white/60 backdrop-blur-sm">Milk</div>
+                                            <div className="absolute inset-0 flex items-center justify-center font-bold text-gray-500 text-base lg:text-xl bg-white/60 backdrop-blur-sm">Milk</div>
                                         )}
                                     </div>
-                                    <div className="h-auto min-h-[4rem] sm:min-h-[5rem] flex items-center justify-center px-2 sm:px-4 w-full">
-                                        {result === null && <p className="text-sm sm:text-xl text-gray-700 font-semibold bg-white/60 px-4 py-2 rounded-full">Set conditions and wait...</p>}
-                                        {result === 'milk' && <p className="text-sm sm:text-xl text-red-700 font-bold bg-red-100 p-3 sm:p-4 rounded-xl shadow-sm w-full border border-red-200">Still milk! You need a starter.</p>}
-                                        {result === 'cold' && <p className="text-sm sm:text-xl text-blue-700 font-bold bg-blue-100 p-3 sm:p-4 rounded-xl shadow-sm w-full border border-blue-200">Still milk! Too cold for bacteria.</p>}
-                                        {result === 'hot' && <p className="text-sm sm:text-xl text-red-700 font-bold bg-red-100 p-3 sm:p-4 rounded-xl shadow-sm w-full border border-red-200">Still milk! Too hot, bacteria died.</p>}
-                                        {result === 'curd' && <p className="text-sm sm:text-xl text-green-800 font-bold bg-green-100 p-3 sm:p-4 rounded-xl border border-green-300 shadow-md animate-fade-in w-full">Success! Perfect curd formed!</p>}
+                                    <div className="h-16 lg:h-20 flex items-center justify-center px-2 w-full">
+                                        {result === null && <p className="text-sm lg:text-base text-gray-700 font-semibold bg-white/60 px-4 py-2 rounded-full">Set conditions and wait...</p>}
+                                        {result === 'milk' && <p className="text-sm lg:text-base text-red-700 font-bold bg-red-100 p-2 lg:p-3 rounded-xl shadow-sm w-full border border-red-200">Still milk! You need a starter.</p>}
+                                        {result === 'cold' && <p className="text-sm lg:text-base text-blue-700 font-bold bg-blue-100 p-2 lg:p-3 rounded-xl shadow-sm w-full border border-blue-200">Still milk! Too cold for bacteria.</p>}
+                                        {result === 'hot' && <p className="text-sm lg:text-base text-red-700 font-bold bg-red-100 p-2 lg:p-3 rounded-xl shadow-sm w-full border border-red-200">Still milk! Too hot, bacteria died.</p>}
+                                        {result === 'curd' && <p className="text-sm lg:text-base text-green-800 font-bold bg-green-100 p-2 lg:p-3 rounded-xl border border-green-300 shadow-md animate-fade-in w-full">Success! Perfect curd formed!</p>}
                                     </div>
                                 </div>
                             </div>
                             
                             {result === 'curd' && (
-                                <div className="text-center mt-2 pb-4">
-                                    <button onClick={onComplete} className="px-8 py-3 sm:px-10 sm:py-4 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 shadow-xl text-lg sm:text-xl transition transform hover:scale-105">Complete Activity</button>
+                                <div className="text-center mt-4">
+                                    <button onClick={onComplete} className="px-8 py-3 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 shadow-xl text-base transition transform hover:scale-105">Complete Activity</button>
                                 </div>
                             )}
                         </div>
@@ -410,58 +411,58 @@
             };
 
             return (
-                <div className="space-y-4 h-full flex flex-col justify-center">
+                <div className="h-full flex flex-col justify-center">
                     {step === 'predict' && (
-                        <div className="animate-fade-in space-y-4 max-w-4xl mx-auto w-full">
-                            <h3 className="text-2xl sm:text-4xl font-extrabold text-indigo-900 drop-shadow-sm text-center">Investigation time!</h3>
-                            <p className="text-lg sm:text-2xl text-indigo-800 font-medium text-center">Which kitchen ingredient is traditionally used on small cuts because of its antimicrobial properties?</p>
-                            <div className="grid grid-cols-2 gap-4 sm:gap-6 mt-4 sm:mt-8">
-                                <button onClick={() => handlePrediction('sugar')} className="p-4 sm:p-8 rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-yellow-400 hover:bg-white text-xl sm:text-3xl font-bold text-gray-700 shadow-md transition transform hover:scale-105">Sugar</button>
-                                <button onClick={() => handlePrediction('salt')} className="p-4 sm:p-8 rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-yellow-400 hover:bg-white text-xl sm:text-3xl font-bold text-gray-700 shadow-md transition transform hover:scale-105">Salt</button>
-                                <button onClick={() => handlePrediction('turmeric')} className="p-4 sm:p-8 rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-yellow-400 hover:bg-white text-xl sm:text-3xl font-bold text-gray-700 shadow-md transition transform hover:scale-105 relative overflow-hidden group">
+                        <div className="animate-fade-in flex flex-col items-center justify-center h-full max-w-4xl mx-auto w-full px-4">
+                            <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-indigo-900 drop-shadow-sm text-center mb-2">Investigation time!</h3>
+                            <p className="text-lg md:text-xl lg:text-2xl text-indigo-800 font-medium text-center mb-6 lg:mb-8">Which kitchen ingredient is traditionally used on small cuts because of its antimicrobial properties?</p>
+                            <div className="grid grid-cols-2 gap-4 lg:gap-6 w-full">
+                                <button onClick={() => handlePrediction('sugar')} className="p-6 lg:p-10 rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-yellow-400 hover:bg-white text-xl lg:text-3xl font-bold text-gray-700 shadow-md transition transform hover:scale-105">Sugar</button>
+                                <button onClick={() => handlePrediction('salt')} className="p-6 lg:p-10 rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-yellow-400 hover:bg-white text-xl lg:text-3xl font-bold text-gray-700 shadow-md transition transform hover:scale-105">Salt</button>
+                                <button onClick={() => handlePrediction('turmeric')} className="p-6 lg:p-10 rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-yellow-400 hover:bg-white text-xl lg:text-3xl font-bold text-gray-700 shadow-md transition transform hover:scale-105 relative overflow-hidden group">
                                     <div className="absolute inset-0 bg-[url('assets/turmeric.jpg')] bg-cover bg-center opacity-0 group-hover:opacity-30 transition-opacity"></div>
                                     <span className="relative z-10 group-hover:text-yellow-800 transition-colors">Turmeric (Haldi)</span>
                                 </button>
-                                <button onClick={() => handlePrediction('flour')} className="p-4 sm:p-8 rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-yellow-400 hover:bg-white text-xl sm:text-3xl font-bold text-gray-700 shadow-md transition transform hover:scale-105">Flour</button>
+                                <button onClick={() => handlePrediction('flour')} className="p-6 lg:p-10 rounded-3xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-yellow-400 hover:bg-white text-xl lg:text-3xl font-bold text-gray-700 shadow-md transition transform hover:scale-105">Flour</button>
                             </div>
                         </div>
                     )}
                     {step === 'explain' && (
-                        <div className="animate-fade-in text-center space-y-4 flex flex-col items-center max-w-4xl mx-auto">
-                            <div className="w-32 h-32 sm:w-48 sm:h-48 rounded-full overflow-hidden shadow-2xl mb-2 border-4 border-white bg-white shrink-0">
+                        <div className="animate-fade-in flex flex-col items-center justify-center h-full max-w-4xl mx-auto px-4">
+                            <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden shadow-2xl mb-4 border-4 border-white bg-white shrink-0">
                                 <img src="assets/turmeric.jpg" alt="Turmeric" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-3xl sm:text-4xl font-extrabold text-yellow-600 drop-shadow-sm">Correct! It's Turmeric.</h3>
-                            <p className="text-lg sm:text-xl text-gray-800 font-medium max-w-2xl leading-relaxed bg-white/60 p-4 sm:p-6 rounded-2xl backdrop-blur-sm">Turmeric contains a compound called <b>Curcumin</b>. It has mild antimicrobial properties, meaning it can help slow down the growth of certain germs and keep minor cuts clean!</p>
-                            <button onClick={() => setStep('experiment')} className="px-6 py-3 sm:px-10 sm:py-4 bg-yellow-500 text-white font-bold rounded-2xl hover:bg-yellow-600 shadow-xl text-lg sm:text-xl transition transform hover:scale-105 mt-4">See it in action</button>
+                            <h3 className="text-2xl lg:text-3xl font-extrabold text-yellow-600 drop-shadow-sm mb-4">Correct! It's Turmeric.</h3>
+                            <p className="text-base lg:text-lg text-gray-800 font-medium max-w-2xl text-center leading-relaxed bg-white/60 p-4 lg:p-6 rounded-2xl backdrop-blur-sm mb-6 lg:mb-8">Turmeric contains a compound called <b>Curcumin</b>. It has mild antimicrobial properties, meaning it can help slow down the growth of certain germs and keep minor cuts clean!</p>
+                            <button onClick={() => setStep('experiment')} className="px-8 py-3 lg:px-10 lg:py-4 bg-yellow-500 text-white font-bold rounded-2xl hover:bg-yellow-600 shadow-xl text-lg transition transform hover:scale-105">See it in action</button>
                         </div>
                     )}
                     {step === 'experiment' && (
-                        <div className="animate-fade-in space-y-6 flex flex-col h-full items-center justify-center text-center w-full max-w-5xl mx-auto">
-                            <h3 className="text-2xl sm:text-3xl font-extrabold text-indigo-900 drop-shadow-sm">Experiment: The Turmeric Shield</h3>
-                            <p className="text-lg sm:text-xl text-indigo-800 font-medium bg-white/50 px-6 py-2 rounded-full hidden sm:block">Apply turmeric to the sample to see its effect on bacteria.</p>
+                        <div className="animate-fade-in flex flex-col h-full items-center justify-center text-center w-full max-w-5xl mx-auto px-4">
+                            <h3 className="text-2xl lg:text-3xl font-extrabold text-indigo-900 drop-shadow-sm mb-2 lg:mb-4">Experiment: The Turmeric Shield</h3>
+                            <p className="text-base lg:text-lg text-indigo-800 font-medium bg-white/50 px-6 py-2 rounded-full mb-6 hidden md:block">Apply turmeric to the sample to see its effect on bacteria.</p>
                             
-                            <div className="relative w-48 h-48 sm:w-72 sm:h-72 rounded-full border-[8px] border-white shadow-2xl bg-red-100 flex items-center justify-center mb-6 mt-4 shrink-0">
+                            <div className="relative w-40 h-40 lg:w-56 lg:h-56 rounded-full border-[8px] border-white shadow-2xl bg-red-100 flex items-center justify-center mb-6 shrink-0">
                                 <div className="absolute inset-0 bg-red-200/50 rounded-full overflow-hidden"></div>
-                                <div className="text-xl sm:text-2xl font-black text-red-400 z-10 pointer-events-none drop-shadow-sm">Skin Sample</div>
+                                <div className="text-lg lg:text-xl font-black text-red-400 z-10 pointer-events-none drop-shadow-sm">Skin Sample</div>
                                 
                                 {applied && <div className="shield-real z-20 pointer-events-none"></div>}
                                 
-                                {!applied && <BacteriaIcon className="bacteria-svg absolute top-4 left-4 sm:top-10 sm:left-10 z-30 pointer-events-none" />}
-                                {!applied && <BacteriaIcon className="bacteria-svg absolute bottom-6 right-6 sm:bottom-12 sm:right-12 z-30 pointer-events-none" style={{animationDelay: '1s'}} />}
-                                {!applied && <BacteriaIcon className="bacteria-svg absolute top-1/2 right-4 sm:right-10 z-30 pointer-events-none" style={{animationDelay: '0.5s'}} />}
+                                {!applied && <BacteriaIcon className="bacteria-svg absolute top-4 left-4 z-30 pointer-events-none" />}
+                                {!applied && <BacteriaIcon className="bacteria-svg absolute bottom-6 right-6 z-30 pointer-events-none" style={{animationDelay: '1s'}} />}
+                                {!applied && <BacteriaIcon className="bacteria-svg absolute top-1/2 right-4 z-30 pointer-events-none" style={{animationDelay: '0.5s'}} />}
                                 
-                                {applied && <BacteriaIcon className="absolute -top-6 left-6 sm:-top-10 sm:left-10 opacity-30 z-30 pointer-events-none" />}
+                                {applied && <BacteriaIcon className="absolute -top-6 left-6 opacity-30 z-30 pointer-events-none" />}
                             </div>
                             
                             {!applied ? (
-                                <button onClick={() => setApplied(true)} className="px-8 py-4 sm:px-12 sm:py-6 bg-yellow-500 text-white font-black rounded-3xl hover:bg-yellow-600 shadow-2xl text-xl sm:text-3xl transition transform hover:scale-110 z-40 mt-4">Apply Turmeric</button>
+                                <button onClick={() => setApplied(true)} className="px-8 py-4 lg:px-10 lg:py-5 bg-yellow-500 text-white font-black rounded-3xl hover:bg-yellow-600 shadow-2xl text-xl lg:text-2xl transition transform hover:scale-110 z-40 mt-2">Apply Turmeric</button>
                             ) : (
                                 <div className="space-y-4 animate-fade-in w-full max-w-lg z-40">
-                                    <div className="bg-green-100 p-4 sm:p-6 rounded-3xl border-2 border-green-300 shadow-lg backdrop-blur-sm">
-                                        <p className="text-green-800 font-black text-xl sm:text-2xl mb-2">The curcumin shield makes it harder for microbes to grow rapidly!</p>
+                                    <div className="bg-green-100 p-4 lg:p-5 rounded-3xl border-2 border-green-300 shadow-lg backdrop-blur-sm">
+                                        <p className="text-green-800 font-black text-lg lg:text-xl mb-1 lg:mb-2">The curcumin shield makes it harder for microbes to grow rapidly!</p>
                                     </div>
-                                    <button onClick={onComplete} className="px-8 py-3 sm:px-10 sm:py-4 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 shadow-xl text-lg sm:text-xl transition transform hover:scale-105 mt-2">Complete Activity</button>
+                                    <button onClick={onComplete} className="px-8 py-3 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 shadow-xl text-base transition transform hover:scale-105 mt-2">Complete Activity</button>
                                 </div>
                             )}
                         </div>
@@ -503,58 +504,59 @@
             };
 
             return (
-                <div className="space-y-4 h-full flex flex-col justify-center">
+                <div className="h-full flex flex-col justify-center">
                     {step === 'predict' && (
-                        <div className="animate-fade-in space-y-4 max-w-4xl mx-auto w-full">
-                            <h3 className="text-2xl sm:text-4xl font-extrabold text-indigo-900 drop-shadow-sm text-center">What is happening here?</h3>
-                            <p className="text-lg sm:text-2xl text-indigo-800 font-medium text-center">If you slowly heat a glass of ice water, what happens to the temperature while the ice is still melting?</p>
-                            <div className="grid grid-cols-1 gap-3 mt-6">
-                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-cyan-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">A. The temperature keeps rising steadily.</button>
-                                <button onClick={() => handlePrediction(true)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-cyan-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">B. It stays at 0°C until all the ice melts.</button>
-                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 sm:p-6 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-cyan-500 hover:bg-white transition text-lg sm:text-xl font-semibold text-gray-700 shadow-sm">C. The water gets colder than the ice.</button>
+                        <div className="animate-fade-in flex flex-col items-center justify-center h-full max-w-4xl mx-auto w-full px-4">
+                            <h3 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-indigo-900 drop-shadow-sm text-center mb-2">What is happening here?</h3>
+                            <p className="text-lg md:text-xl lg:text-2xl text-indigo-800 font-medium text-center mb-6 lg:mb-8">If you slowly heat a glass of ice water, what happens to the temperature while the ice is still melting?</p>
+                            <div className="w-full flex flex-col gap-3 lg:gap-4">
+                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-cyan-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">A. The temperature keeps rising steadily.</button>
+                                <button onClick={() => handlePrediction(true)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-cyan-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">B. It stays at 0°C until all the ice melts.</button>
+                                <button onClick={() => handlePrediction(false)} className="w-full text-left p-4 lg:p-5 rounded-2xl bg-white/80 backdrop-blur-sm border-2 border-transparent hover:border-cyan-500 hover:bg-white transition text-base lg:text-lg font-semibold text-gray-700 shadow-sm">C. The water gets colder than the ice.</button>
                             </div>
                         </div>
                     )}
                     {step === 'explain' && (
-                        <div className="animate-fade-in text-center space-y-4 flex flex-col items-center max-w-4xl mx-auto">
-                            <div className="w-32 h-32 sm:w-48 sm:h-48 rounded-full overflow-hidden shadow-2xl mb-2 border-4 border-white bg-white shrink-0">
+                        <div className="animate-fade-in flex flex-col items-center justify-center h-full max-w-4xl mx-auto px-4">
+                            <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full overflow-hidden shadow-2xl mb-4 border-4 border-white bg-white shrink-0">
                                 <img src="assets/ice_water.jpg" alt="Ice Water" className="w-full h-full object-cover" />
                             </div>
-                            <h3 className="text-3xl sm:text-4xl font-extrabold text-cyan-600 drop-shadow-sm">The correct answer is B!</h3>
-                            <p className="text-lg sm:text-xl text-gray-800 font-medium max-w-2xl leading-relaxed bg-white/60 p-4 sm:p-6 rounded-2xl backdrop-blur-sm">During a <b>Change of State</b> (solid to liquid), all the heat energy goes into breaking the bonds of the ice. The temperature won't rise above 0°C until every last piece of ice has melted!</p>
-                            <button onClick={() => setStep('experiment')} className="px-6 py-3 sm:px-10 sm:py-4 bg-cyan-600 text-white font-bold rounded-2xl hover:bg-cyan-700 shadow-xl text-lg sm:text-xl transition transform hover:scale-105 mt-4">Experiment!</button>
+                            <h3 className="text-2xl lg:text-3xl font-extrabold text-cyan-600 drop-shadow-sm mb-4">The correct answer is B!</h3>
+                            <p className="text-base lg:text-lg text-gray-800 font-medium max-w-2xl text-center leading-relaxed bg-white/60 p-4 lg:p-6 rounded-2xl backdrop-blur-sm mb-6 lg:mb-8">During a <b>Change of State</b> (solid to liquid), all the heat energy goes into breaking the bonds of the ice. The temperature won't rise above 0°C until every last piece of ice has melted!</p>
+                            <button onClick={() => setStep('experiment')} className="px-8 py-3 lg:px-10 lg:py-4 bg-cyan-600 text-white font-bold rounded-2xl hover:bg-cyan-700 shadow-xl text-lg transition transform hover:scale-105">Experiment!</button>
                         </div>
                     )}
                     {step === 'experiment' && (
-                        <div className="animate-fade-in space-y-4 sm:space-y-6 flex flex-col h-full items-center justify-center text-center w-full max-w-5xl mx-auto">
-                            <h3 className="text-2xl sm:text-3xl font-extrabold text-indigo-900 drop-shadow-sm">Experiment: Latent Heat</h3>
-                            <p className="text-lg sm:text-xl text-indigo-800 font-medium bg-white/50 px-6 py-2 rounded-full hidden sm:block">Turn up the heat and watch the thermometer.</p>
+                        <div className="animate-fade-in flex flex-col h-full items-center justify-center text-center w-full max-w-5xl mx-auto px-4">
+                            <h3 className="text-2xl lg:text-3xl font-extrabold text-indigo-900 drop-shadow-sm mb-4 lg:mb-6">Experiment: Latent Heat</h3>
                             
-                            <div className="w-full flex flex-col md:flex-row justify-center items-center gap-6 sm:gap-12 p-6 sm:p-10 bg-white/70 backdrop-blur-md rounded-3xl border border-white shadow-lg flex-1 min-h-0">
+                            <div className="w-full flex flex-col md:flex-row justify-center items-center gap-6 lg:gap-12 p-6 lg:p-8 bg-white/70 backdrop-blur-md rounded-3xl border border-white shadow-lg">
                                 <div className="w-full md:w-1/2 text-center relative flex flex-col items-center">
-                                    <div className="w-32 h-32 sm:w-56 sm:h-56 rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl mb-4 sm:mb-6 border-[6px] border-white relative bg-white shrink-0">
+                                    <div className="w-32 h-32 lg:w-48 lg:h-48 rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-2xl mb-4 lg:mb-6 border-[6px] border-white relative bg-white shrink-0">
                                         <img src="assets/ice_water.jpg" alt="Ice Water" className="w-full h-full object-cover" />
                                         <div className="absolute inset-0 bg-blue-500 mix-blend-color transition-opacity duration-500" style={{opacity: heat < 50 ? 0.3 : 0}}></div>
                                         <div className="absolute inset-0 bg-white transition-opacity duration-500" style={{opacity: heat < 50 ? 0.2 : 0}}></div>
                                     </div>
-                                    <div className="text-4xl sm:text-6xl font-black text-cyan-900 drop-shadow-sm">{temp}°C</div>
+                                    <div className="text-4xl lg:text-6xl font-black text-cyan-900 drop-shadow-sm">{temp}°C</div>
                                 </div>
-                                <div className="w-full md:w-1/2 max-w-[16rem] sm:max-w-none text-left bg-white/90 p-4 sm:p-6 rounded-2xl shadow-md border border-gray-100">
-                                    <label className="font-bold block mb-2 sm:mb-4 text-gray-700 uppercase text-sm sm:text-base tracking-wider">Apply Heat</label>
-                                    <input type="range" min="0" max="100" value={heat} onChange={(e) => setHeat(Number(e.target.value))} className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-orange-500 shadow-inner" />
+                                <div className="w-full md:w-1/2 flex flex-col gap-4">
+                                    <div className="bg-white/90 p-4 lg:p-6 rounded-2xl shadow-md border border-gray-100 text-left">
+                                        <label className="font-bold block mb-2 lg:mb-4 text-gray-700 uppercase text-xs lg:text-sm tracking-wider">Apply Heat</label>
+                                        <input type="range" min="0" max="100" value={heat} onChange={(e) => setHeat(Number(e.target.value))} className="w-full h-4 bg-gray-200 rounded-full appearance-none cursor-pointer accent-orange-500 shadow-inner" />
+                                    </div>
                                 </div>
                             </div>
                             
-                            <div className="h-auto min-h-[4rem] sm:min-h-[5rem] flex items-center justify-center w-full px-4">
+                            <div className="h-16 lg:h-20 flex items-center justify-center w-full mt-4 lg:mt-6 px-4">
                                 {heat < 50 ? 
-                                    <div className="text-sm sm:text-xl text-cyan-800 font-bold bg-cyan-100 px-4 py-2 sm:px-6 sm:py-4 rounded-full border border-cyan-300 shadow-sm">Notice how the temperature stays at 0°C while melting!</div> :
-                                    <div className="text-sm sm:text-xl text-orange-800 font-bold bg-orange-100 px-4 py-2 sm:px-6 sm:py-4 rounded-full border border-orange-300 shadow-md animate-fade-in">All ice melted! Now the water temperature rises quickly.</div>
+                                    <div className="text-sm lg:text-base text-cyan-800 font-bold bg-cyan-100 px-6 py-2 rounded-full border border-cyan-300 shadow-sm">Notice how the temperature stays at 0°C while melting!</div> :
+                                    <div className="text-sm lg:text-base text-orange-800 font-bold bg-orange-100 px-6 py-2 rounded-full border border-orange-300 shadow-md animate-fade-in">All ice melted! Now the water temperature rises quickly.</div>
                                 }
                             </div>
 
                             {heat > 80 && (
-                                <div className="text-center mt-2 pb-4">
-                                    <button onClick={onComplete} className="px-8 py-3 sm:px-10 sm:py-4 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 shadow-xl text-lg sm:text-xl transition transform hover:scale-105">Complete Activity</button>
+                                <div className="text-center mt-2">
+                                    <button onClick={onComplete} className="px-8 py-3 bg-green-600 text-white font-bold rounded-2xl hover:bg-green-700 shadow-xl text-base transition transform hover:scale-105">Complete Activity</button>
                                 </div>
                             )}
                         </div>
@@ -564,12 +566,12 @@
         };
 
         const ActivityWrapper = ({ title, onClose, children }) => (
-            <div className="absolute inset-0 z-20 flex flex-col p-4 sm:p-8 animate-fade-in content-layer">
-                <div className="flex justify-between items-center mb-4 sm:mb-8 shrink-0 bg-white/50 backdrop-blur-md p-3 sm:p-4 rounded-2xl sm:rounded-3xl shadow-sm border border-white/60">
-                    <h2 className="text-2xl sm:text-4xl font-black text-indigo-900 tracking-tight drop-shadow-sm ml-2 sm:ml-4">{title}</h2>
-                    <button onClick={() => { stopSpeaking(); onClose(); }} className="w-10 h-10 sm:w-14 sm:h-14 flex items-center justify-center rounded-full bg-white hover:bg-red-50 hover:text-red-600 text-gray-500 text-2xl sm:text-3xl font-bold transition shadow-md">&times;</button>
+            <div className="absolute inset-0 z-20 flex flex-col p-4 lg:p-8 animate-fade-in content-layer bg-white/30 backdrop-blur-md">
+                <div className="flex justify-between items-center mb-4 lg:mb-8 shrink-0 bg-white/70 backdrop-blur-md p-3 lg:p-4 rounded-2xl lg:rounded-3xl shadow-sm border border-white/60">
+                    <h2 className="text-2xl lg:text-4xl font-black text-indigo-900 tracking-tight drop-shadow-sm ml-2 lg:ml-4">{title}</h2>
+                    <button onClick={() => { stopSpeaking(); onClose(); }} className="w-10 h-10 lg:w-14 lg:h-14 flex items-center justify-center rounded-full bg-white hover:bg-red-50 hover:text-red-600 text-gray-500 text-xl lg:text-3xl font-bold transition shadow-md">&times;</button>
                 </div>
-                <div className="flex-1 overflow-y-auto overflow-x-hidden pr-2 sm:pr-4 pb-4 sm:pb-8">
+                <div className="flex-1 overflow-y-auto overflow-x-hidden pb-4 lg:pb-8">
                     {children}
                 </div>
             </div>
@@ -586,13 +588,13 @@
             ];
 
             return (
-                <div className="w-full h-full flex flex-col items-center justify-center animate-fade-in p-4 sm:p-8 content-layer overflow-y-auto">
-                    <div className="bg-white/60 backdrop-blur-md px-6 sm:px-10 py-4 sm:py-6 rounded-[2rem] sm:rounded-[3rem] shadow-lg border border-white/80 mb-8 sm:mb-12 flex flex-col items-center shrink-0 mt-4 sm:mt-0">
-                        <h1 className="text-3xl sm:text-6xl font-black text-indigo-900 mb-2 sm:mb-4 tracking-tight text-center drop-shadow-sm">Science in My Kitchen</h1>
-                        <p className="text-base sm:text-2xl text-indigo-700 text-center font-bold">Tap an object to discover the hidden science inside it.</p>
+                <div className="w-full h-full flex flex-col items-center justify-center animate-fade-in p-4 lg:p-8 content-layer">
+                    <div className="bg-white/60 backdrop-blur-md px-6 lg:px-12 py-4 lg:py-6 rounded-[2rem] lg:rounded-[3rem] shadow-lg border border-white/80 mb-6 lg:mb-12 flex flex-col items-center shrink-0">
+                        <h1 className="text-3xl md:text-4xl lg:text-6xl font-black text-indigo-900 mb-2 lg:mb-4 tracking-tight text-center drop-shadow-sm">Science in My Kitchen</h1>
+                        <p className="text-base lg:text-2xl text-indigo-700 text-center font-bold">Tap an object to discover the hidden science inside it.</p>
                     </div>
                     
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-12 md:gap-8 lg:gap-16 pb-8">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-12 pb-4">
                         {objects.map(obj => {
                             const isDone = completed.includes(obj.id);
                             return (
@@ -600,12 +602,12 @@
                                  onClick={() => { setCurrentActivity(obj.id); setView('activity'); }}
                                  className="relative flex flex-col items-center cursor-pointer group">
                                 
-                                <div className={`w-28 h-28 sm:w-40 sm:h-40 lg:w-48 lg:h-48 mb-4 sm:mb-6 rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[3rem] overflow-hidden border-[4px] sm:border-[6px] lg:border-[8px] transition-all duration-300 shadow-xl sm:shadow-2xl bg-white ${isDone ? 'border-green-400 transform group-hover:-translate-y-2' : 'border-white glow group-hover:scale-110'}`}>
+                                <div className={`w-28 h-28 md:w-32 md:h-32 lg:w-48 lg:h-48 mb-4 lg:mb-6 rounded-[1.5rem] lg:rounded-[3rem] overflow-hidden border-[4px] lg:border-[8px] transition-all duration-300 shadow-xl lg:shadow-2xl bg-white ${isDone ? 'border-green-400 transform group-hover:-translate-y-2' : 'border-white glow group-hover:scale-110'}`}>
                                     <img src={obj.image} alt={obj.name} className="w-full h-full object-cover" />
                                 </div>
-                                <div className="text-sm sm:text-lg lg:text-xl font-black text-indigo-900 bg-white/90 px-4 sm:px-6 py-2 rounded-full shadow-lg backdrop-blur-md text-center border-2 border-white/50">{obj.name}</div>
+                                <div className="text-sm lg:text-xl font-black text-indigo-900 bg-white/90 px-4 lg:px-6 py-2 rounded-full shadow-lg backdrop-blur-md text-center border-2 border-white/50">{obj.name}</div>
                                 
-                                {isDone && <div className="absolute -top-2 -right-2 sm:-top-4 sm:-right-4 bg-green-500 text-white rounded-full w-8 h-8 sm:w-12 sm:h-12 lg:w-16 lg:h-16 flex items-center justify-center font-black text-lg sm:text-2xl lg:text-3xl border-2 sm:border-4 lg:border-[6px] border-white shadow-xl animate-pop z-10">✓</div>}
+                                {isDone && <div className="absolute -top-2 -right-2 lg:-top-4 lg:-right-4 bg-green-500 text-white rounded-full w-8 h-8 lg:w-16 lg:h-16 flex items-center justify-center font-black text-lg lg:text-3xl border-2 lg:border-[6px] border-white shadow-xl animate-pop z-10">✓</div>}
                             </div>
                         )})}
                     </div>
@@ -627,43 +629,40 @@
             };
 
             return (
-                <div className="w-full h-screen bg-[#0f172a] overflow-hidden">
-                    {/* Auto-adapting App Container. Fills screen entirely on mobile/small screens, 
-                        and takes up nicely proportioned space on large desktop screens (landscape or square) */}
-                    <div className="w-full h-full max-w-[1400px] mx-auto sm:h-screen md:h-[95vh] md:w-[95vw] md:mt-[2.5vh] md:rounded-[3rem] app-background app-container flex flex-col relative shadow-[0_0_50px_rgba(0,0,0,0.5)]">
-                        
-                        {view === 'hub' && <KitchenHub setView={setView} setCurrentActivity={setCurrentActivity} completed={completed} />}
-                        
-                        {view === 'activity' && currentActivity === 'cooker' && 
-                            <ActivityWrapper title="Pressure Cooker" onClose={() => setView('hub')}>
-                                <PressureCookerActivity onComplete={() => markCompleted('cooker')} />
-                            </ActivityWrapper>
-                        }
-                        {view === 'activity' && currentActivity === 'curd' && 
-                            <ActivityWrapper title="Milk & Curd" onClose={() => setView('hub')}>
-                                <CurdActivity onComplete={() => markCompleted('curd')} />
-                            </ActivityWrapper>
-                        }
-                        {view === 'activity' && currentActivity === 'turmeric' && 
-                            <ActivityWrapper title="Turmeric Investigation" onClose={() => setView('hub')}>
-                                <TurmericActivity onComplete={() => markCompleted('turmeric')} />
-                            </ActivityWrapper>
-                        }
-                        {view === 'activity' && currentActivity === 'ice' && 
-                            <ActivityWrapper title="Melting Ice" onClose={() => setView('hub')}>
-                                <IceActivity onComplete={() => markCompleted('ice')} />
-                            </ActivityWrapper>
-                        }
-                        
-                        {completed.length === 4 && view === 'hub' && (
-                            <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center z-50 bg-white/80 animate-fade-in backdrop-blur-lg content-layer">
-                                <div className="text-[6rem] sm:text-[10rem] mb-4 sm:mb-8 drop-shadow-2xl">🏆</div>
-                                <h2 className="text-4xl sm:text-6xl font-black text-green-600 mb-2 sm:mb-6 drop-shadow-sm">You did it!</h2>
-                                <p className="text-xl sm:text-3xl text-indigo-900 font-bold text-center px-4 bg-white/50 py-2 rounded-full shadow-sm">You've mastered the science of your kitchen.</p>
-                                <button onClick={() => setCompleted([])} className="mt-8 sm:mt-12 px-8 py-4 sm:px-12 sm:py-6 bg-indigo-900 text-white font-black rounded-3xl hover:bg-indigo-800 shadow-2xl text-xl sm:text-2xl pointer-events-auto transition transform hover:scale-110 border-4 border-indigo-700/50">Play Again</button>
-                            </div>
-                        )}
-                    </div>
+                /* Completely borderless, full 100vw and 100vh layout */
+                <div className="w-screen h-screen app-background app-container flex flex-col relative overflow-hidden">
+                    
+                    {view === 'hub' && <KitchenHub setView={setView} setCurrentActivity={setCurrentActivity} completed={completed} />}
+                    
+                    {view === 'activity' && currentActivity === 'cooker' && 
+                        <ActivityWrapper title="Pressure Cooker" onClose={() => setView('hub')}>
+                            <PressureCookerActivity onComplete={() => markCompleted('cooker')} />
+                        </ActivityWrapper>
+                    }
+                    {view === 'activity' && currentActivity === 'curd' && 
+                        <ActivityWrapper title="Milk & Curd" onClose={() => setView('hub')}>
+                            <CurdActivity onComplete={() => markCompleted('curd')} />
+                        </ActivityWrapper>
+                    }
+                    {view === 'activity' && currentActivity === 'turmeric' && 
+                        <ActivityWrapper title="Turmeric Investigation" onClose={() => setView('hub')}>
+                            <TurmericActivity onComplete={() => markCompleted('turmeric')} />
+                        </ActivityWrapper>
+                    }
+                    {view === 'activity' && currentActivity === 'ice' && 
+                        <ActivityWrapper title="Melting Ice" onClose={() => setView('hub')}>
+                            <IceActivity onComplete={() => markCompleted('ice')} />
+                        </ActivityWrapper>
+                    }
+                    
+                    {completed.length === 4 && view === 'hub' && (
+                        <div className="absolute inset-0 pointer-events-none flex flex-col items-center justify-center z-50 bg-white/80 animate-fade-in backdrop-blur-lg content-layer">
+                            <div className="text-[6rem] lg:text-[10rem] mb-4 lg:mb-8 drop-shadow-2xl">🏆</div>
+                            <h2 className="text-4xl lg:text-6xl font-black text-green-600 mb-2 lg:mb-6 drop-shadow-sm">You did it!</h2>
+                            <p className="text-xl lg:text-3xl text-indigo-900 font-bold text-center px-4 bg-white/50 py-2 rounded-full shadow-sm">You've mastered the science of your kitchen.</p>
+                            <button onClick={() => setCompleted([])} className="mt-8 lg:mt-12 px-8 py-4 lg:px-12 lg:py-6 bg-indigo-900 text-white font-black rounded-3xl hover:bg-indigo-800 shadow-2xl text-xl lg:text-2xl pointer-events-auto transition transform hover:scale-110 border-4 border-indigo-700/50">Play Again</button>
+                        </div>
+                    )}
                 </div>
             );
         };
